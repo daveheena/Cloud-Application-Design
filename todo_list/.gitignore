@@ -99,3 +99,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# databases
+*.db
+
+# VS code
+.vscode
+
+private.py
