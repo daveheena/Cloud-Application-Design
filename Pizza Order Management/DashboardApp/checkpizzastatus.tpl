@@ -49,6 +49,7 @@
 		</form>
 		<br/><br/><br/><br/>
 		%for row in rows:
+			%print(row[0])
 			%if(row[0]==None):
 				<table style="width:70%;height:10%;font:calibri" align="center">
 					<tr style="width:70%;text-align:center;">
