@@ -15,10 +15,6 @@ def server_static(filepath):
 @get("/pizza")
 def pizza():
 	result = ()
-	cursor = cnx.cursor()
-	cursor.execute('SELECT * FROM orders')
-	result = cursor.fetchall()
-	cursor.close()
 	return template("checkpizzastatus",rows=result)
 
 @post("/getpizza")
