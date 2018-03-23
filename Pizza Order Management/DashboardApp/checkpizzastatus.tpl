@@ -57,7 +57,7 @@
 					</tr>
 				</table>
 			%else:
-				%status = int(row[0])
+				%status = int(row[1])
 					<table style="width:70%;height:10%;font:calibri" align="center">
 						<tr style="width:70%;text-align:center;">
 							%if(status>=1):

@@ -23,7 +23,7 @@ def getpizza():
 	orderid = request.POST.get('orderid','').strip()
 	cursor = cnx.cursor()
 	cursor.execute('SELECT * FROM orders WHERE orderid = %s',(int(orderid),))
-	result = cursor.fetchall()
+	result = cursor.fetchone()
 	cursor.close()
 	return template("checkpizzastatus",rows=result)
 
