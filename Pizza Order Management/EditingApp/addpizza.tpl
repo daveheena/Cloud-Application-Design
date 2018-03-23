@@ -34,13 +34,10 @@
 		<script type="text/javascript">
 			function updateOrder(object){
 				var http = new XMLHttpRequest();
-				var params = "id:"+object.id.substring(6,object.id.length)+"&status:"+document.getElementById("orderstatus"+object.id.substring(6,object.id.length)).value;
-				var url = "/updatepizza/"+params;
+				var params = "orderid="+object.id.substring(6,object.id.length)+"&amp;status="+document.getElementById("orderstatus"+object.id.substring(6,object.id.length)).value;
+				var url = "/updatepizza";
 				
-				http.open("GET", url, true);
-
-				//Send the proper header information along with the request
-				http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				http.open("POST", url, true);
 
 				http.onreadystatechange = function() {//Call a function when the state changes.
 					if(http.readyState == 4 && http.status == 200) {
@@ -48,15 +45,15 @@
 						location.reload(true);
 					}
 				}
-				http.send();
+				http.send(params);
 			}
 			
 			function deleteOrder(object){
 				var http = new XMLHttpRequest();
-				var params = object.id.substring(6,object.id.length);
-				var url = "/deletepizza/"+params;
+				var params = "orderid="+object.id.substring(6,object.id.length);
+				var url = "/deletepizza";
 				
-				http.open("GET", url, true);
+				http.open("POST", url, true);
 
 				//Send the proper header information along with the request
 				http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -67,7 +64,7 @@
 						location.reload(true);
 					}
 				}
-				http.send();
+				http.send(params);
 			}
 		</script>
 		
