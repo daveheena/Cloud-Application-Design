@@ -14,6 +14,7 @@ def server_static(filepath):
 @get("/")
 @get("/pizza")
 def pizza():
+	result = ()
 	cursor = cnx.cursor()
 	cursor.execute('SELECT * FROM orders')
 	result = cursor.fetchall()
@@ -22,6 +23,7 @@ def pizza():
 
 @post("/getpizza")
 def getpizza():
+	result = ()
 	orderid = request.POST.get('orderid','').strip()
 	cursor = cnx.cursor()
 	cursor.execute('SELECT * FROM orders WHERE orderid = %s',(int(orderid),))
