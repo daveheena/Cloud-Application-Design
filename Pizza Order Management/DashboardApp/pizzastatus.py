@@ -19,7 +19,7 @@ def pizza():
 
 @post("/getpizza")
 def getpizza():
-	result = ()
+	result = []
 	orderid = request.POST.get('orderid','').strip()
 	cursor = cnx.cursor()
 	cursor.execute('SELECT * FROM orders WHERE orderid = %s',(int(orderid),))

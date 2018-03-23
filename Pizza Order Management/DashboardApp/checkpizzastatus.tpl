@@ -48,16 +48,14 @@
 			</table>		
 		</form>
 		<br/><br/><br/><br/>
-		%for row in rows:
-			%print(row[0])
-			%if(row[0]==None):
+			%if(rows==()):
 				<table style="width:70%;height:10%;font:calibri" align="center">
 					<tr style="width:70%;text-align:center;">
 						<td style="border:1px solid green;">Order is not valid</td>
 					</tr>
 				</table>
 			%else:
-				%status = int(row[1])
+				%status = int(rows[1])
 					<table style="width:70%;height:10%;font:calibri" align="center">
 						<tr style="width:70%;text-align:center;">
 							%if(status>=1):
