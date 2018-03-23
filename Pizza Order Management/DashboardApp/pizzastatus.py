@@ -1,17 +1,12 @@
-from database_connection import r
-import sys
 import warnings
+import mysql.connector
+
+from database_connection import cnx
 
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore",category=DeprecationWarning)
-    from bottle import get, post, run, debug, default_app, request, template, static_file 	
-
-if __name__ == '__main__':
-    channel = sys.argv[1]
-
-    pubsub = r.pubsub()
-    pubsub.subscribe(channel)
-
+    from bottle import get, post, run, debug, default_app, request, template, static_file, redirect
+	
 @get('/static/<filepath:path>')
 def server_static(filepath):
     return static_file(filepath, root='./static')
@@ -19,17 +14,20 @@ def server_static(filepath):
 @get("/")
 @get("/pizza")
 def pizza():
-	orders = []
-	return template("checkpizzastatus",rows=orders)
+	cursor = cnx.cursor()
+	cursor.execute('SELECT * FROM orders')
+	result = cursor.fetchall()
+	cursor.close()
+	return template("checkpizzastatus",rows=result)
 
 @post("/getpizza")
 def getpizza():
 	orderid = request.POST.get('orderid','').strip()
-	orderstatus = r.get(orderid)
-	print(orderstatus)
-	orders = []
-	orders.append(orderstatus)
-	return template("checkpizzastatus",rows=orders)
+	cursor = cnx.cursor()
+	cursor.execute('SELECT * FROM orders WHERE orderid = %s',(int(orderid),))
+	result = cursor.fetchall()
+	cursor.close()
+	return template("checkpizzastatus",rows=result)
 
 debug(True)
 run(host='0.0.0.0', port=8080)

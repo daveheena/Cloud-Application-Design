@@ -31,10 +31,6 @@
 		
 	</head>
 	<body>
-		<script type="text/javascript">
-			
-		</script>
-		
 		<h2 align="center">Pizza Order Management System</h2>
 		
 		<form action="/getpizza" method="post">

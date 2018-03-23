@@ -1,7 +1,19 @@
-import redis
+import mysql.connector
 
-r = redis.StrictRedis(
-        host='redis-13366.c11.us-east-1-3.ec2.cloud.redislabs.com',
-        port=13366,
-        password='Kdv3XhAGb1dZ0iJCE3NEdILsN5MIa2oV'
-    )
+from mysql.connector import errorcode
+
+def connect():
+    try:
+        querystring = ""
+        connection = mysql.connector.connect(user='admin', password='pizza123', host='165.227.55.19', database='pizzaordermanagement')
+        cursor = connection.cursor()
+        return connection
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+cnx = connect()
