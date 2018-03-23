@@ -23,21 +23,24 @@
 				background-color: #0000FF;
 				color: white;
 			}
-			
+
 			.button:hover{
 				cursor: hand;
 			}
 		</style>
-		
+
 	</head>
 	<body>
 		<script type="text/javascript">
 			function updateOrder(object){
 				var http = new XMLHttpRequest();
-				var params = "orderid="+object.id.substring(6,object.id.length)+"&amp;status="+document.getElementById("orderstatus"+object.id.substring(6,object.id.length)).value;
+				var params = "id="+object.id.substring(6,object.id.length)+"&status="+document.getElementById("orderstatus"+object.id.substring(6,object.id.length)).value;
 				var url = "/updatepizza";
-				
+
 				http.open("POST", url, true);
+
+				//Send the proper header information along with the request
+				http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 				http.onreadystatechange = function() {//Call a function when the state changes.
 					if(http.readyState == 4 && http.status == 200) {
@@ -47,12 +50,11 @@
 				}
 				http.send(params);
 			}
-			
+
 			function deleteOrder(object){
 				var http = new XMLHttpRequest();
-				var params = "orderid="+object.id.substring(6,object.id.length);
+				var params = "id="+object.id.substring(6,object.id.length);
 				var url = "/deletepizza";
-				
 				http.open("POST", url, true);
 
 				//Send the proper header information along with the request
@@ -67,9 +69,9 @@
 				http.send(params);
 			}
 		</script>
-		
+
 		<h2 align="center">Pizza Order Management System</h2>
-		
+
 		<form action="/addpizza" method="post">
 			<table class="pizza">
 				<tr>
@@ -92,7 +94,7 @@
 				<tr>
 					<td colspan="2" align="center"><input type="submit" value="Add New Order"/></td>
 				</tr>
-			</table>		
+			</table>
 		</form>
 		<form method="post">
 			<table class="pizza">
@@ -105,40 +107,40 @@
 					<th>Update</td>
 					<th>Delete</td>
 				</tr>
-				%for order in sorted(rows.keys()):
+				%for order in rows:
 				<tr>
 					<td>
-						<label>{{order}}</label>
+						<label>{{order[0]}}</label>
 					</td>
-					<td><select id="orderstatus{{order}}">
-						%if(rows[order]==1):
+					<td><select id="orderstatus{{order[0]}}">
+						%if(order[1]==1):
 							<option value="1" selected="true">Order Confirmed</option>
 						%else:
 							<option value="1">Order Confirmed</option>
 						%end
-						%if(rows[order]==2):
+						%if(order[1]==2):
 							<option value="2" selected="true">Pizza Prepared</option>
 						%else:
 							<option value="2">Pizza Prepared</option>
 						%end
-						%if(rows[order]==3):
+						%if(order[1]==3):
 							<option value="3" selected="true">Pizza Baked</option>
 						%else:
 							<option value="3">Pizza Baked</option>
 						%end
-						%if(rows[order]==4):
+						%if(order[1]==4):
 							<option value="4" selected="true">Pizza On the Way</option>
 						%else:
 							<option value="4">Pizza On the Way</option>
 						%end
-						%if(rows[order]==5):
+						%if(order[1]==5):
 							<option value="5" selected="true">Pizza Delivered</option>
 						%else:
 							<option value="5">Pizza Delivered</option>
 						%end
 					</select></td>
-					<td><img onclick="updateOrder(this)" class="button" id="update{{order}}" src="/static/update.png" height="30" width="30"/></td>
-					<td><img onclick="deleteOrder(this)" class="button" id="delete{{order}}" src="/static/delete.png" height="30" width="30"/></td>
+					<td><img onclick="updateOrder(this)" class="button" id="update{{order[0]}}" src="/static/update.png" height="30" width="30"/></td>
+					<td><img onclick="deleteOrder(this)" class="button" id="delete{{order[0]}}" src="/static/delete.png" height="30" width="30"/></td>
 				</tr>
 				%end
 			</table>
