@@ -19,13 +19,16 @@ def pizza():
 
 @post("/getpizza")
 def getpizza():
-	result = []
+	result = ()
 	orderid = request.POST.get('orderid','').strip()
-	cursor = cnx.cursor()
-	cursor.execute('SELECT * FROM orders WHERE orderid = %s',(int(orderid),))
-	result = cursor.fetchone()
-	cursor.close()
+	if(orderid!=""):
+		cursor = cnx.cursor()
+		cursor.execute('SELECT * FROM orders WHERE orderid = %s',(int(orderid),))
+		result = cursor.fetchone()
+		cursor.close()
+	else:
+		result = ()
 	return template("checkpizzastatus",rows=result)
 
 debug(True)
-run(host='0.0.0.0', port=8080)
+run(host='0.0.0.0', port=8080, reloader=True)

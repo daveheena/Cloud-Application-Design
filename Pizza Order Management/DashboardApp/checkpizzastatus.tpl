@@ -48,7 +48,15 @@
 			</table>		
 		</form>
 		<br/><br/><br/><br/>
+			%print(rows)
+			%print(rows==())
 			%if(rows==()):
+				<table style="width:70%;height:10%;font:calibri" align="center">
+					<tr style="width:70%;text-align:center;">
+						<td style="border:1px solid green;">Order is not valid</td>
+					</tr>
+				</table>
+			%elif(rows==None or rows[0]==""):
 				<table style="width:70%;height:10%;font:calibri" align="center">
 					<tr style="width:70%;text-align:center;">
 						<td style="border:1px solid green;">Order is not valid</td>
